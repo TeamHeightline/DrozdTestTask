@@ -1,46 +1,36 @@
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import {useRouter} from 'next/router';
+import axiosClient from "@/src/utils/axios";
 
 export default function Login() {
     const router = useRouter();
+
     async function handleLogin(event) {
-        event.preventDefault(); // Предотвращаем стандартную отправку формы
+        event.preventDefault();
 
         const formData = {
             email: event.target.email.value,
             password: event.target.password.value,
         };
 
-        try {
-            const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-            const response = await fetch(`${baseUrl}/login`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    login: formData.email,
-                    password: formData.password,
-                }),
+        axiosClient.post(`/login`, {
+            login: formData.email,
+            password: formData.password,
+        })
+            .then(response => {
+                const {data} = response;
+                if (response.status === 200) {
+                    axiosClient.defaults.headers.post['Authorization'] = `Bearer ${data.jwt}`;
+                    router.push('/quizzes');
+                } else {
+                    console.error('Login failed', data);
+                    alert('Login failed: ' + (data.message || 'Unknown error'));
+                }
+            })
+            .catch(error => {
+                console.error('Error submitting form', error);
+                alert('An error occurred. Please try again: ' + (error.response?.data.message || 'Unknown error'));
             });
-
-            const data = await response.json();
-
-            if (response.ok) {
-                // Предположим, что в ответе сервер возвращает токен, который нужно сохранить
-                localStorage.setItem('token', data.token);
-
-
-                router.push('/'); // Перенаправляем на главную страницу
-            } else {
-                // Обработка ошибок от API
-                console.error('Login failed', data);
-                alert('Login failed: ' + (data.message || 'Unknown error'));
-            }
-        } catch (error) {
-            console.error('Error submitting form', error);
-            alert('An error occurred. Please try again.');
-        }
     }
 
     return (

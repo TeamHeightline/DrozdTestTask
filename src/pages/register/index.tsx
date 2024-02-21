@@ -1,6 +1,9 @@
 import Link from 'next/link';
+import axiosClient from "@/src/utils/axios";
+import {useRouter} from "next/router";
 
 export default function Register() {
+    const router = useRouter();
 
     // Функция для обработки отправки формы
     async function handleSubmit(event) {
@@ -12,41 +15,30 @@ export default function Register() {
             confirmPassword: event.target.confirmPassword.value,
         };
 
-        // Проверяем совпадение паролей (если требуется)
+
         if (formData.password !== formData.confirmPassword) {
             alert('Passwords do not match!');
             return;
         }
 
-        try {
-            const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-            const response = await fetch(baseUrl + '/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    login: formData.email,
-                    password: formData.password,
-                }),
+        axiosClient.post('/register', {
+            login: formData.email,
+            password: formData.password,
+        })
+            .then(response => {
+                const {data} = response;
+                if (response.status === 200) {
+                    router.push('/login');
+                } else {
+                    console.error('Registration failed', data);
+                    alert('Registration failed: ' + (data.message || 'Unknown error'));
+                }
+            })
+            .catch(error => {
+                console.error('Error submitting form', error);
+                alert('An error occurred. Please try again: ' + (error.response?.data.message || 'Unknown error'));
             });
-
-            const data = await response.json();
-
-            if (response.ok) {
-                // Обработка успешной регистрации
-                // Например, перенаправление на страницу входа или показ сообщения об успехе
-                console.log('Registration successful', data);
-            } else {
-                // Обработка ошибок от API
-                console.error('Registration failed', data);
-                alert('Registration failed: ' + (data.message || 'Unknown error'));
-            }
-        } catch (error) {
-            console.error('Error submitting form', error);
-            alert('An error occurred. Please try again.');
-        }
-    };
+    }
 
     return (
         <div>

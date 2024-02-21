@@ -26,7 +26,7 @@ export default function Register() {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    email: formData.email,
+                    login: formData.email,
                     password: formData.password,
                 }),
             });

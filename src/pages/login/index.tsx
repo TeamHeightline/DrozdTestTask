@@ -1,6 +1,48 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 export default function Login() {
+    const router = useRouter();
+    async function handleLogin(event) {
+        event.preventDefault(); // Предотвращаем стандартную отправку формы
+
+        const formData = {
+            email: event.target.email.value,
+            password: event.target.password.value,
+        };
+
+        try {
+            const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+            const response = await fetch(`${baseUrl}/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    login: formData.email,
+                    password: formData.password,
+                }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                // Предположим, что в ответе сервер возвращает токен, который нужно сохранить
+                localStorage.setItem('token', data.token);
+
+
+                router.push('/'); // Перенаправляем на главную страницу
+            } else {
+                // Обработка ошибок от API
+                console.error('Login failed', data);
+                alert('Login failed: ' + (data.message || 'Unknown error'));
+            }
+        } catch (error) {
+            console.error('Error submitting form', error);
+            alert('An error occurred. Please try again.');
+        }
+    }
+
     return (
         <div>
             <section className="bg-gray-50 dark:bg-gray-900">
@@ -19,7 +61,7 @@ export default function Login() {
                             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                                 Войдите в ваш аккаунт
                             </h1>
-                            <form className="space-y-4 md:space-y-6" action="#">
+                            <form className="space-y-4 md:space-y-6" onSubmit={handleLogin}>
                                 <div>
                                     <label htmlFor="email"
                                            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">

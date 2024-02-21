@@ -6,9 +6,8 @@ import Logo from "@/src/components/logo";
 export default function Register() {
     const router = useRouter();
 
-    // Функция для обработки отправки формы
     async function handleSubmit(event) {
-        event.preventDefault(); // Предотвращаем стандартную отправку формы
+        event.preventDefault();
 
         const formData = {
             email: event.target.email.value,

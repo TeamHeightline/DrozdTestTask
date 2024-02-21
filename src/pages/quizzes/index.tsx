@@ -1,6 +1,4 @@
-// Импорт зависимостей
 import {GetServerSideProps, InferGetServerSidePropsType} from 'next';
-import Typography from '@mui/material/Typography';
 import React from 'react';
 import {Quiz} from "@/src/types/quiz";
 import QuizCard from "@/src/components/quiz-card";
@@ -22,7 +20,6 @@ export const getServerSideProps: GetServerSideProps<QuizzesProps> = async () => 
     return {props: {quizzes}};
 };
 
-// Компонент страницы, использующий загруженные данные
 const Quizzes: React.FC<InferGetServerSidePropsType<typeof getServerSideProps>> = ({quizzes}) => {
     console.log(quizzes)
     return (

@@ -21,13 +21,13 @@ export const getServerSideProps: GetServerSideProps<QuizzesProps> = async () => 
 };
 
 const Quizzes: React.FC<InferGetServerSidePropsType<typeof getServerSideProps>> = ({quizzes}) => {
-    console.log(quizzes)
     return (
-        <div class="grid grid-cols-4 gap-4 m-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 m-4">
             {quizzes.map((quiz, index) => (
                 <QuizCard key={index} quiz={quiz}/>
             ))}
         </div>
+
     );
 };
 

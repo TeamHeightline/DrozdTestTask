@@ -2,9 +2,8 @@ import {Quiz} from "@/src/types/quiz";
 
 export default function QuizCard({quiz, ...props}: { quiz: Quiz, }) {
     return (
-
         <div
-            className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            className="max-w-max md:max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <a href="#">
                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"> {quiz.name}</h5>
             </a>

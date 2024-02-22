@@ -24,7 +24,7 @@ export const getServerSideProps: GetServerSideProps<QuizzesProps> = async (conte
         };
     }
     const quiz: QuizData = await res.json();
-    
+
     return {props: {quiz}};
 };
 
@@ -38,7 +38,7 @@ export default function QuizPage({quiz}: QuizzesProps) {
     }
 
     return (
-        <div className="max-w-md mx-auto my-10">
+        <div className="max-w-md mx-auto my-10 pl-4 pr-4">
             {quiz.questions.map((item, index) => (
                 <div key={index} className="mb-5">
                     <h3 className="text-lg font-semibold mb-2">{item.question}</h3>

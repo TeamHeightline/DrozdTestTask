@@ -10,6 +10,6 @@ export type Question = {
     answers: Answers;
 }
 
-export type QuizData = {
+export type QuizData = Quiz & {
     questions: Question[];
 }

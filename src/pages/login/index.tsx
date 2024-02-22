@@ -26,7 +26,7 @@ export default function Login() {
                 if (response.status === 200) {
                     axiosClient.defaults.headers.post['Authorization'] = `Bearer ${data.jwt}`;
                     login()
-                    router.push('/quizzes');
+                    router.push('/quiz');
                 } else {
                     console.error('Login failed', data);
                     alert('Login failed: ' + (data.message || 'Unknown error'));

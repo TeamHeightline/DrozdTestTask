@@ -3,8 +3,8 @@ import {useAuth} from "@/src/context/auth-context";
 
 const pages = [
     {
-        url: "/quizzes",
-        title: "Вопросы"
+        url: "/quiz",
+        title: "Викторины"
     },
     {
         url: "/users",

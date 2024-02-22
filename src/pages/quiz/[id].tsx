@@ -31,8 +31,8 @@ export const getServerSideProps: GetServerSideProps<QuizzesProps> = async (conte
 
 export default function QuizPage({quiz}: QuizzesProps) {
     const [selectedAnswers, setSelectedAnswers] = useState<{ [key: number]: string }>({});
-    const [responseMessage, setResponseMessage] = useState<string>(''); // Текст ответа от сервера
-    const [responseStatus, setResponseStatus] = useState<'none' | 'success' | 'failed'>('none'); // Состояние ответа
+    const [numberOfTrueAnswers, setNumberOfTrueAnswers] = useState<number | null>(null);
+    const [responseStatus, setResponseStatus] = useState<'none' | 'success' | 'failed'>('none');
     const router = useRouter();
 
     function handleAnswerSelect(questionIndex: number, answer: string) {
@@ -45,12 +45,22 @@ export default function QuizPage({quiz}: QuizzesProps) {
         })
             .then((response) => {
                 console.log('Ответ сервера:', response.data);
-                setResponseMessage(`Ответ сохранен, число правильных ответов: ${response.data.split(":")[1]}`);
+                const numberOfTrueAnswers = Number(response.data.split(":")[1]);
+                setNumberOfTrueAnswers(numberOfTrueAnswers);
                 setResponseStatus('success');
+
+                //Сохранение статистики в Local Storage
+                const quizStatisticsKey = 'quizStatistics';
+                const quizId = quiz.id;
+                const allQuizzesStatistics = JSON.parse(localStorage.getItem(quizStatisticsKey) || '{}');
+                if (!allQuizzesStatistics[quizId]) {
+                    allQuizzesStatistics[quizId] = [];
+                }
+                allQuizzesStatistics[quizId].push(numberOfTrueAnswers);
+                localStorage.setItem(quizStatisticsKey, JSON.stringify(allQuizzesStatistics));
             })
             .catch((error) => {
                 console.error('Ошибка при отправке ответов:', error);
-                setResponseMessage('Произошла ошибка при отправке ответов.');
                 setResponseStatus('failed');
             });
     }
@@ -63,7 +73,7 @@ export default function QuizPage({quiz}: QuizzesProps) {
 
             {responseStatus === "success" ? (
                 <>
-                    <h3 className="text-lg font-semibold mb-2">{responseMessage}</h3>
+                    <h3 className="text-lg font-semibold mb-2">Ответ сохранен, число правильных ответов: {numberOfTrueAnswers}</h3>
                     <button
                         className="mt-4 btn"
                         onClick={() => router.push('/')}
@@ -101,7 +111,7 @@ export default function QuizPage({quiz}: QuizzesProps) {
                             {responseStatus === "none" ? "Отправить ответы" : "Отправить снова"}
                         </button>
                         {responseStatus === "failed" && (
-                            <p className="text-red-500 mt-2">{responseMessage}</p>
+                            <p className="text-red-500 mt-2">Произошла ошибка при отправке ответов.</p>
                         )}
                     </div>
                 </>

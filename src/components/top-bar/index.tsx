@@ -5,11 +5,11 @@ import {useAuth} from "@/src/context/auth-context";
 const pages = [
     {
         url: "/quiz",
-        title: "Викторины",
+        title: "Квизы",
     },
     {
-        url: "/users",
-        title: "Пользователи",
+        url: "/my-statistic",
+        title: "Мои результаты",
     },
     {
         url: "/login",

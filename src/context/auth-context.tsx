@@ -1,8 +1,10 @@
 import {createContext, useContext, useState, ReactNode, FC} from 'react';
+import {IUser} from "@/src/types/user";
 
 interface AuthContextType {
     isAuthenticated: boolean;
-    login: () => void;
+    userData: IUser | null;
+    login: (userData: IUser) => void;
     logout: () => void;
 }
 
@@ -14,12 +16,19 @@ interface AuthProviderProps {
 
 export const AuthProvider: FC<AuthProviderProps> = ({children}) => {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+    const [userData, setUserData] = useState<IUser | null>(null);
 
-    const login = () => setIsAuthenticated(true);
-    const logout = () => setIsAuthenticated(false);
+    function login(userData: IUser) {
+        setUserData(userData)
+        setIsAuthenticated(true)
+    }
+
+    function logout() {
+        setIsAuthenticated(false)
+    }
 
     return (
-        <AuthContext.Provider value={{isAuthenticated, login, logout}}>
+        <AuthContext.Provider value={{isAuthenticated, userData, login, logout}}>
             {children}
         </AuthContext.Provider>
     );

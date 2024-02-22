@@ -24,8 +24,9 @@ export default function Login() {
             .then(response => {
                 const {data} = response;
                 if (response.status === 200) {
-                    axiosClient.defaults.headers.post['Authorization'] = `Bearer ${data.jwt}`;
-                    login()
+                    // axiosClient.defaults.headers.post['Authorization'] = `Bearer ${data.jwt}`;
+                    // Со слов Андрея, статистику нужно хранить в Local storage
+                    login(data)
                     router.push('/quiz');
                 } else {
                     console.error('Login failed', data);

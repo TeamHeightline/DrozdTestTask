@@ -8,6 +8,10 @@ const pages = [
         title: "Квизы",
     },
     {
+        url: "/all-statistic",
+        title: "Таблица лидеров"
+    },
+    {
         url: "/my-statistic",
         title: "Мои результаты",
     },

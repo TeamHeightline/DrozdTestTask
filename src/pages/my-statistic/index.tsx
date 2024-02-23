@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {GetServerSideProps} from "next";
 import {Quiz} from "@/src/types/quiz";
 
@@ -6,7 +6,6 @@ interface Statistic {
     id: string;
     attempts: number;
     correctAnswers: string[];
-
 }
 
 type QuizzesProps = {
@@ -26,11 +25,10 @@ export const getServerSideProps: GetServerSideProps<QuizzesProps> = async () => 
     return {props: {quizzes}};
 };
 
-export default function MyStatistic({quizzes}: QuizzesProps)  {
+export default function MyStatistic({quizzes}: QuizzesProps) {
     const [statistics, setStatistics] = useState<Statistic[]>([]);
 
     useEffect(() => {
-        // Чтение статистики из Local Storage
         const stats = JSON.parse(localStorage.getItem('quizStatistics')) || {};
         const formattedStats = Object.keys(stats).map((quizId) => ({
             id: quizId,
@@ -54,14 +52,15 @@ export default function MyStatistic({quizzes}: QuizzesProps)  {
                     </thead>
                     <tbody className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                     {statistics.map((stat) => {
-                        const quiz = quizzes.find((item) => String(item.id) === stat.id)
-                        return(
-                        <tr key={stat.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                            <td className="px-6 py-4">{quiz?.name || ""}</td>
-                            <td className="px-6 py-4">{stat.attempts}</td>
-                            <td className="px-6 py-4">{stat.correctAnswers.join(', ')}</td>
-                        </tr>
-                    )}
+                            const quiz = quizzes.find((item) => String(item.id) === stat.id)
+                            return (
+                                <tr key={stat.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                    <td className="px-6 py-4">{quiz?.name || ""}</td>
+                                    <td className="px-6 py-4">{stat.attempts}</td>
+                                    <td className="px-6 py-4">{stat.correctAnswers.join(', ')}</td>
+                                </tr>
+                            )
+                        }
                     )}
                     </tbody>
                 </table>

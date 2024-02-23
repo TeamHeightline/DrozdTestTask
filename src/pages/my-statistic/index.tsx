@@ -29,6 +29,7 @@ export default function MyStatistic({quizzes}: QuizzesProps) {
     const [statistics, setStatistics] = useState<Statistic[]>([]);
 
     useEffect(() => {
+        // @ts-ignore
         const stats = JSON.parse(localStorage.getItem('quizStatistics')) || {};
         const formattedStats = Object.keys(stats).map((quizId) => ({
             id: quizId,

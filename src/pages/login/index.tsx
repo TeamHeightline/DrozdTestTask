@@ -9,7 +9,7 @@ export default function Login() {
     const {login} = useAuth();
 
 
-    async function handleLogin(event) {
+    async function handleLogin(event: any) {
         event.preventDefault();
 
         const formData = {

@@ -6,7 +6,7 @@ import Logo from "@/src/components/logo";
 export default function Register() {
     const router = useRouter();
 
-    async function handleSubmit(event) {
+    async function handleSubmit(event: any) {
         event.preventDefault();
 
         const formData = {

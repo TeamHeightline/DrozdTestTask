@@ -37,11 +37,12 @@ export default function AllStatistic({usersScore}: QuizzesProps) {
 
     useEffect(() => {
         // Получение суммы моих очков из local storage и добавление в общие результаты
+        // @ts-ignore
         const stats = JSON.parse(localStorage.getItem('quizStatistics')) || {};
         let myScore = 0
         Object.keys(stats).map((quizId) => {
             myScore += stats[quizId]
-                .reduce((sum, a) => sum + a, 0)
+                .reduce((sum: number, a: number) => sum + a, 0)
         });
         const meRow: IUserWithScore = {
             id: -1,

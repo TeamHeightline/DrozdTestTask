@@ -71,7 +71,7 @@ export default function AllStatistic({usersScore}: QuizzesProps) {
                         </thead>
                         <tbody className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                         {userWithMeScore.map((user, index) => (
-                            <tr key={index} className={`bg-white border-b dark:border-gray-700 
+                            <tr key={user.id} className={`bg-white border-b dark:border-gray-700 
                             ${user.id === -1 ? "dark:bg-emerald-800 bg-emerald-300" : "dark:bg-gray-800 bg-white"}`}>
                                 <td className="px-6 py-4">{user.login}</td>
                                 <td className="px-6 py-4">{user.score}</td>

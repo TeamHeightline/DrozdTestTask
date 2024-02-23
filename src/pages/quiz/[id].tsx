@@ -28,7 +28,6 @@ export const getServerSideProps: GetServerSideProps<QuizzesProps> = async (conte
 
     return {props: {quiz}};
 };
-
 export default function QuizPage({quiz}: QuizzesProps) {
     const [selectedAnswers, setSelectedAnswers] = useState<{ [key: number]: string }>({});
     const [numberOfTrueAnswers, setNumberOfTrueAnswers] = useState<number | null>(null);
@@ -73,7 +72,8 @@ export default function QuizPage({quiz}: QuizzesProps) {
 
             {responseStatus === "success" ? (
                 <>
-                    <h3 className="text-lg font-semibold mb-2">Ответ сохранен, число правильных ответов: {numberOfTrueAnswers}</h3>
+                    <h3 className="text-lg font-semibold mb-2">Ответ сохранен, число правильных
+                        ответов: {numberOfTrueAnswers}</h3>
                     <button
                         className="mt-4 btn"
                         onClick={() => router.push('/')}

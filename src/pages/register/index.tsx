@@ -17,7 +17,7 @@ export default function Register() {
 
 
         if (formData.password !== formData.confirmPassword) {
-            alert('Passwords do not match!');
+            alert('Пароли не совпадают!');
             return;
         }
 
@@ -31,12 +31,12 @@ export default function Register() {
                     router.push('/login');
                 } else {
                     console.error('Registration failed', data);
-                    alert('Registration failed: ' + (data.message || 'Unknown error'));
+                    alert('Не удалось зарегистрироваться: ' + (data.message || 'Unknown error'));
                 }
             })
             .catch(error => {
                 console.error('Error submitting form', error);
-                alert('An error occurred. Please try again: ' + (error.response?.data.message || 'Unknown error'));
+                alert('Произошла ошибка, Пожалуйста, повторите попытку: ' + (error.response?.data.message || 'Unknown error'));
             });
     }
 

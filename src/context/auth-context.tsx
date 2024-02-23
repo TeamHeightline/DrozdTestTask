@@ -19,12 +19,13 @@ export const AuthProvider: FC<AuthProviderProps> = ({children}) => {
     const [userData, setUserData] = useState<IUser | null>(null);
 
     function login(userData: IUser) {
-        setUserData(userData)
         setIsAuthenticated(true)
+        setUserData(userData)
     }
 
     function logout() {
         setIsAuthenticated(false)
+        setUserData(null)
     }
 
     return (

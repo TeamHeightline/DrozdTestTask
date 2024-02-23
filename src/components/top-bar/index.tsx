@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import Logo from "@/src/components/logo";
 import {useAuth} from "@/src/context/auth-context";
+import Link from "next/link";
 
 const pages = [
     {
@@ -47,10 +48,10 @@ export default function TopBar() {
                     <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 dark:border-gray-700">
                         {availablePages.map((route) => (
                             <li key={route.url}>
-                                <a href={route.url}
-                                   className="block py-2 px-3 rounded md:p-0 md:border-0 text-gray-900 dark:text-white dark:hover:text-primary-500">
+                                <Link href={route.url}
+                                      className="block py-2 px-3 rounded md:p-0 md:border-0 text-gray-900 dark:text-white dark:hover:text-primary-500">
                                     {route.title}
-                                </a>
+                                </Link>
                             </li>
                         ))}
                     </ul>
